@@ -11,14 +11,16 @@ class TestChoose(unittest.TestCase):
 
     @catch_timeout
     def test_valid(self):
-        self.input.group = lambda x: ['', '.choose canada usa'][x]
+        self.input.group = lambda x: ['.choose', 'canada usa'][x]
         choose.choose(self.phenny, self.input)
         out = self.phenny.reply.call_args[0][0]
-        self.assertTrue(out == 'canada' or out == 'usa')
+        m = (out == 'canada' or out == 'usa')
+        self.assertTrue(m)
 
     @catch_timeout
     def test_valid2(self):
-        self.input.group = lambda x: ['', '.choose chocolate vanilla'][x]
+        self.input.group = lambda x: ['.choose', 'chocolate vanilla'][x]
         choose.choose(self.phenny, self.input)
         out = self.phenny.reply.call_args[0][0]
-        self.assertFalse(out != 'chocolate' and out != 'vanilla')
+        m = (out == 'chocolate' or out == 'vanilla')
+        self.assertTrue(m)
