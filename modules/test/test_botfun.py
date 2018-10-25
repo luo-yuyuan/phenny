@@ -9,7 +9,6 @@ class TestChoose(unittest.TestCase):
         self.phenny = MagicMock()
         self.input = MagicMock()
 
-    @catch_timeout
     def test_botfight(self):
         messages = ["hits ChanServ", "punches ChanServ", "kicks ChanServ", "hits ChanServ with a rubber hose",
                     "stabs ChanServ with a clean kitchen knife"]
@@ -17,7 +16,6 @@ class TestChoose(unittest.TestCase):
         out = self.phenny.do.call_args[0][0]
         self.assertTrue(out in messages)
 
-    @catch_timeout
     def test_bothug(self):
         botfun.bothug(self.phenny, self.input)
         out = self.phenny.do.call_args[0][0]

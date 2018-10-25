@@ -9,7 +9,6 @@ class TestApertiumchill(unittest.TestCase):
         self.phenny = MagicMock()
         self.input = MagicMock()
 
-    @catch_timeout
     def test_chill(self):
         apertiumchill.chill(self.phenny, self.input)
         self.assertTrue(self.phenny.say.called)

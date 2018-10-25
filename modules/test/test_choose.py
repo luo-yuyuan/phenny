@@ -9,7 +9,6 @@ class TestChoose(unittest.TestCase):
         self.phenny = MagicMock()
         self.input = MagicMock()
 
-    @catch_timeout
     def test_valid(self):
         self.input.group = lambda x: ['.choose', 'canada usa'][x]
         choose.choose(self.phenny, self.input)
@@ -17,7 +16,6 @@ class TestChoose(unittest.TestCase):
         m = (out == 'canada' or out == 'usa')
         self.assertTrue(m)
 
-    @catch_timeout
     def test_valid2(self):
         self.input.group = lambda x: ['.choose', 'chocolate vanilla'][x]
         choose.choose(self.phenny, self.input)
