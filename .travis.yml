@@ -14,7 +14,7 @@ python:
     - "nightly"
 
 install: travis_retry pip install -r requirements.txt
-    - pip install codecov
+install: - pip install codecov
 
 script:
     - ./sanity-checks.sh
