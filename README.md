@@ -1,5 +1,6 @@
 # phenny
 [![Build Status](https://travis-ci.org/apertium/phenny.png?branch=master)](https://travis-ci.org/apertium/phenny)
+[![Coverage Status](https://coveralls.io/repos/github/luo-yuyuan/phenny/badge.svg?branch=NewTests)](https://coveralls.io/github/luo-yuyuan/phenny?branch=NewTests)
 
 This is phenny, a Python IRC bot. Originally written by Sean B. Palmer, it has
 been ported to Python3.
