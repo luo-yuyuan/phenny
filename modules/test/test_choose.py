@@ -1,7 +1,6 @@
 import unittest
 from mock import MagicMock
 from modules import choose
-from web import catch_timeout
 
 
 class TestChoose(unittest.TestCase):

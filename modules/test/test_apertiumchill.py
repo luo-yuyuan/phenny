@@ -1,7 +1,6 @@
 import unittest
 from mock import MagicMock
 from modules import apertiumchill
-from web import catch_timeout
 
 
 class TestApertiumchill(unittest.TestCase):
