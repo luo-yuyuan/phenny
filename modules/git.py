@@ -610,7 +610,10 @@ def make_issue(repo, username, password, title):
     return 1
 
 def post_issue(phenny, input):
-    if len(input.bytes.split()) < 5:
+    if len(input.bytes.split()) == 1:
+        phenny.say("Usage: .issue <org>/<repo> handle> <password> <issue title>")
+        return
+    elif len(input.bytes.split()) < 5:
         phenny.say("Please try again. Usage: .issue <org>/<repo> handle> <password> <issue title>")
         return
 
