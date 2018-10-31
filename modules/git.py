@@ -15,7 +15,6 @@ import signal
 from threading import Thread
 import time
 import urllib.parse
-import requests
 
 from modules import more
 from tools import generate_report, PortReuseTCPServer, truncate
@@ -600,7 +599,7 @@ def make_issue(repo, username, password, title):
 
     url = 'https://api.github.com/repos/%s/issues' % repo
 
-    session = requests.Session()
+    session = web.requests.Session()
     session.auth = (username, password)
 
     issue = {'title': title}
