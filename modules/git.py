@@ -15,6 +15,7 @@ import signal
 from threading import Thread
 import time
 import urllib.parse
+import requests
 
 from modules import more
 from tools import generate_report, PortReuseTCPServer, truncate
@@ -593,3 +594,31 @@ def retrieve_commit(phenny, input):
     phenny.say(truncate(msg, '{} ' + url))
 # command metadata and invocation
 retrieve_commit.rule = ('$nick', 'info(?: +(.*))')
+
+def make_issue(repo, username, password, title):
+    '''Create an issue on github.com using the given parameters.'''
+
+    url = 'https://api.github.com/repos/%s/issues' % repo
+
+    session = requests.Session()
+    session.auth = (username, password)
+
+    issue = {'title': title}
+
+    r = session.post(url, json.dumps(issue))
+    if r.status_code == 201:
+        return 0
+    return 1
+
+def post_issue(phenny, input):
+    if len(input.bytes.split()) < 5:
+        phenny.say("Please try again. Usage: .issue <org>/<repo> handle> <password> <issue title>")
+        return
+
+    ret = make_issue(input.bytes.split()[1], input.bytes.split()[2], input.bytes.split()[3], " ".join(input.bytes.split()[4:]))
+    if (ret == 0):
+        phenny.say("Issue created. You can add a description at https://github.com/%s/issues" % input.bytes.split()[1])
+    else:
+        phenny.say("Please try again. Usage: .issue <org>/<repo> <handle> <password> <issue title>")
+
+post_issue.commands = ['issue']
