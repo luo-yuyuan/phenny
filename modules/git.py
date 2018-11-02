@@ -610,17 +610,25 @@ def make_issue(repo, username, password, title):
     return 1
 
 def post_issue(phenny, input):
-    if len(input.bytes.split()) == 1:
-        phenny.say("Usage: .issue <org>/<repo> handle> <password> <issue title>")
-        return
-    elif len(input.bytes.split()) < 5:
-        phenny.say("Please try again. Usage: .issue <org>/<repo> handle> <password> <issue title>")
+    command = input.group(1)
+    if not command:
+        phenny.say('Usage: .issue <org>/<repo> handle> <password> <issue title>')
         return
 
-    ret = make_issue(input.bytes.split()[1], input.bytes.split()[2], input.bytes.split()[3], " ".join(input.bytes.split()[4:]))
+    command_split = command.split(' ')
+    if len(command_split) < 4:
+        phenny.say('Please try again. Usage: .issue <org>/<repo> handle> <password> <issue title>')
+        return
+
+    command_spec = command_split[:3]
+    command_spec.append(" ".join(command_split[3:]))
+
+    repo, username, password, title = command_spec
+    ret = make_issue(repo, username, password, title)
+
     if (ret == 0):
-        phenny.say("Issue created. You can add a description at https://github.com/%s/issues" % input.bytes.split()[1])
+        phenny.say('Issue created. You can add a description at https://github.com/%s/issues' % command_spec[0])
     else:
-        phenny.say("Please try again. Usage: .issue <org>/<repo> <handle> <password> <issue title>")
+        phenny.say('Please try again. Usage: .issue <org>/<repo> <handle> <password> <issue title>')
 
 post_issue.commands = ['issue']

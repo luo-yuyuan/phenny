@@ -10,21 +10,29 @@ class TestGit(unittest.TestCase):
 
     @catch_timeout
     def test_issue_missingArgument(self):
-        self.input.bytes = ".issue someorg/somerepo somehandle"
+        self.input.group = lambda x: [None, 'someorg/somerepo somehandle'][x]
         git.post_issue(self.phenny, self.input)
         self.phenny.say.assert_called_once_with(
             "Please try again. Usage: .issue <org>/<repo> handle> <password> <issue title>")
 
     @catch_timeout
     def test_issue_noArgument(self):
-        self.input.bytes = ".issue"
+        self.input.group = lambda x: [None][x]
         git.post_issue(self.phenny, self.input)
         self.phenny.say.assert_called_once_with(
             "Usage: .issue <org>/<repo> handle> <password> <issue title>")
 
     @catch_timeout
     def test_issue_invalidPassword(self):
-        self.input.bytes = ".issue apertium/phenny luo-yuyuan wrongpassword Issue Title"
+        self.input.group = lambda x: [None, 'luo-yuyuan/phenny luo-yuyuan wrongpassword Issue Title'][x]
         git.post_issue(self.phenny, self.input)
         self.phenny.say.assert_called_once_with(
             "Please try again. Usage: .issue <org>/<repo> <handle> <password> <issue title>")
+
+    @catch_timeout
+    def test_issue_validPassword(self):
+        self.input.group = lambda x: [None, 'luo-yuyuan/phenny luo-yuyuan 93775787859e2a4d416d43e15527bdbaaf5ce135 Issue Title'][x]
+        git.post_issue(self.phenny, self.input)
+        self.phenny.say.assert_called_once_with(
+            "Issue created. You can add a description at https://github.com/luo-yuyuan/phenny/issues")
+        
