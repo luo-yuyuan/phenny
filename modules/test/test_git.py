@@ -31,7 +31,7 @@ class TestGit(unittest.TestCase):
 
     @catch_timeout
     def test_issue_validPassword(self):
-        self.input.group = lambda x: [None, 'luo-yuyuan/phenny luo-yuyuan b8710aaf061f3b3d1f963fd393f177dd29abc7fb Issue Title'][x]
+        self.input.group = lambda x: [None, 'luo-yuyuan/phenny luo-yuyuan 99bcc58e1642c398ac1ee420696c1356d0386786 Issue Title'][x]
         git.post_issue(self.phenny, self.input)
         self.phenny.say.assert_called_once_with(
             "Issue created. You can add a description at https://github.com/luo-yuyuan/phenny/issues")
